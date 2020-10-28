@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import morphology, measure
+from skimage.color import rgb2hsv
 
 img = plt.imread('balls_and_rects.png')[::, ::, :3]
 gs = img.sum(axis=2)
@@ -14,7 +15,7 @@ figures = {
 regions = measure.regionprops(lb)
 for region in regions:
     cx, cy = map(int, region.centroid)
-    color = tuple(img[cx, cy])
+    color = round(rgb2hsv(img[cx, cy])[0], 2)
     figure = 'circle'
     if region.extent == 1:
         figure = 'rectangle'
