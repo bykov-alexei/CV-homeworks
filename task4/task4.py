@@ -5,6 +5,7 @@ from skimage.color import rgb2hsv
 
 img = plt.imread('balls_and_rects.png')[::, ::, :3]
 gs = img.sum(axis=2)
+gs[gs > 0] = 1
 lb = measure.label(gs)
 
 figures = {
@@ -15,7 +16,7 @@ figures = {
 regions = measure.regionprops(lb)
 for region in regions:
     cx, cy = map(int, region.centroid)
-    color = round(rgb2hsv(img[cx, cy])[0], 2)
+    color = round(rgb2hsv(img[cx, cy])[0], 1)
     figure = 'circle'
     if region.extent == 1:
         figure = 'rectangle'
